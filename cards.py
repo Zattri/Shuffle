@@ -26,8 +26,7 @@ def riffleShuffle(deck):
     
     while (ratio > 0) and (ratio < 1):
         ratio = len(pile1) / (len(pile1) + len(pile2) - 2)
-        pileIndex = random.uniform(0,1)
-        if pileIndex < ratio:
+        if random.uniform(0,1) < ratio:
             shuffledDeck.append(pile1[0])
             pile1.pop(0)
         else:
@@ -36,8 +35,16 @@ def riffleShuffle(deck):
     shuffledDeck += pile1 + pile2
     return shuffledDeck
 
+def overhandShuffle(deck):
+    shuffledDeck = []
+    while deck:
+        index = random.randint(2,6)
+        shuffledDeck = deck[:index] + shuffledDeck
+        deck = deck[index:]
+    return shuffledDeck
+
 def main():
-    newDeck = riffleShuffle(riffleShuffle(deck))
+    newDeck = overhandShuffle(deck)
     printDeck(newDeck)
 
 main()
