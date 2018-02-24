@@ -1,12 +1,12 @@
 import random
 
 suits = ["Hearts", "Clubs", "Spades", "Diamonds"]
-ranks = range(1,14)
+ranks = list(range(1,11)) + ["Jack", "Queen", "King"]
 deck = [(rank, suit) for suit in suits for rank in ranks]
 
 def printDeck(deck):
     for card in deck:
-        print(card)
+        print(card[0], "of", card[1])
 
 def randomShuffle(deck):
     shuffledDeck = []
@@ -43,8 +43,22 @@ def overhandShuffle(deck):
         deck = deck[index:]
     return shuffledDeck
 
+def chainShuffle(shuffleChain, deck):
+    shuffledDeck = []
+    for shuffle in shuffleChain:
+        shuffledDeck = shuffle(deck)
+    return shuffledDeck
+
+def repeatShuffle(shuffle, deck, times):
+    count = 0
+    shuffledDeck = []
+    while count < times:
+        shuffledDeck = shuffle(deck)
+        count += 1
+    return shuffledDeck
+
 def main():
-    newDeck = overhandShuffle(deck)
+    newDeck = chainShuffle([riffleShuffle, overhandShuffle], deck)
     printDeck(newDeck)
 
 main()
